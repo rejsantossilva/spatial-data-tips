@@ -9,13 +9,9 @@
 
 #install, if necessary
 install.packages("terra")
-install.packages("tidyverse")
-install.packages("dplyr")
 
 #load
 library(terra)
-library(tidyverse)
-library(dplyr)
 
 
 # Open file ---------------------------------------------------------------
