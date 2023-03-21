@@ -9,15 +9,12 @@
 
 # Packages ----------------------------------------------------------------
 
+
 #install, if necessary
 install.packages("terra")
-install.packages("tidyverse")
-install.packages("dplyr")
 
 #load
 library(terra)
-library(tidyverse)
-library(dplyr)
 
 
 # Open file ---------------------------------------------------------------
@@ -31,10 +28,7 @@ shapefile <- vect("Path/shapefile.shp")
 
 
 #First, set current crs
-raster <- project(raster,
-                  crs(raster),
-                  method = "") #check which method is best for your data type
-
+terra::crs(raster) <- terra::crs(raster)
 
 #Now, set a new crs
 #In the case of a raster object it is preferable to use another raster, 
@@ -46,28 +40,60 @@ wgs84.crs <- "EPSG:4326"
 wgs84.crs2 <- "+proj=longlat +datum=WGS84 +no_defs"
 
 
-raster_proj <- project(raster,
-                       sirgas.crs, #choose the new projection or another raster
-                       method = "") #check which method is best for your data type
+raster_sirgas <- project(raster,
+                         sirgas.crs, #choose the new projection or another raster
+                         method = "") #check which method is best for your data type
 
+raster_wgs84_opt1 <- project(raster,
+                             wgs84.crs, #choose the new projection or another raster
+                             method = "") #check which method is best for your data type
 
-raster_proj
-plot(raster_proj)
+raster_wgs84_opt2 <- project(raster,
+                             wgs84.crs, #choose the new projection or another raster
+                             method = "") #check which method is best for your data type
+
+raster_projras <- project(raster,
+                          crs(another_raster),
+                          method = "") #check which method is best for your data type
+
+raster_projshp <- project(raster,
+                          crs(shp),
+                          method = "") #check which method is best for your data type
+
+#read the new object or make a plot() to visialize
 
 
 # Project shapefile data --------------------------------------------------
 
 
 #First, set current crs
-shapefile <- project(shapefile,
-                     crs(shapefile))
+terra::crs(shapefile) <- terra::crs(shapefile)
 
 #Now, set a new crs
-shapefile_proj <- project(shapefile,
-                          "EPSG:4326") #choose the new projection
+#In the case of a raster object it is preferable to use another raster, 
+#but we can also use CRS. To do so, access the function's help and evaluate 
+#the available options.
 
-shapefile_proj
-plot(shapefile_proj)
+sirgas.crs <- "+proj=utm +zone=23 +south +ellps=GRS80 +units=m +no_defs"
+wgs84.crs <- "EPSG:4326"
+wgs84.crs2 <- "+proj=longlat +datum=WGS84 +no_defs"
+
+shapefile_sirgas <- project(shapefile,
+                            sirgas.crs)
+
+shapefile_wgs84_opt1 <- project(shapefile,
+                                wgs84.crs)
+
+shapefile_wgs84_opt2 <- project(shapefile,
+                                wgs84.crs)
+
+shapefile_projras <- project(shapefile,
+                             crs(raster))
+
+shapefile_projshp <- project(shapefile,
+                             crs(another_shp))
+
+#read the new object or make a plot() to visialize
 
 
 # Export spatial data -----------------------------------------------------
