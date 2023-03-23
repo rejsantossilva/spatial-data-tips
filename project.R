@@ -49,8 +49,12 @@ raster_wgs84_opt1 <- project(raster,
                              method = "") #check which method is best for your data type
 
 raster_wgs84_opt2 <- project(raster,
-                             wgs84.crs, #choose the new projection or another raster
+                             wgs84.crs2, #choose the new projection or another raster
                              method = "") #check which method is best for your data type
+
+raster_projras <- project(raster,
+                          "EPSG:4326", #choose the new projection or another raster
+                          method = "") #check which method is best for your data type
 
 raster_projras <- project(raster,
                           crs(another_raster),
@@ -88,12 +92,15 @@ shapefile_wgs84_opt2 <- project(shapefile,
                                 wgs84.crs)
 
 shapefile_projras <- project(shapefile,
+                             "EPSG:4326")
+
+shapefile_projras <- project(shapefile,
                              crs(raster))
 
 shapefile_projshp <- project(shapefile,
                              crs(another_shp))
 
-#read the new object or make a plot() to visialize
+#read the new object or make a plot() to visualize
 
 
 # Export spatial data -----------------------------------------------------
