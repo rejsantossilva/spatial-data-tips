@@ -27,7 +27,7 @@ freq_raster <- terra::freq(raster)
 freq_raster <- as.data.frame(freq_raster)
 
 #Make a new collunm and estimate classes percentage
-freq_luc_2018 %>%
+freq_raster %>%
   #Make a countT collunm that will be the sum of count collunm
   mutate(countT= sum(count)) %>%
   #Calculate values by group/category
